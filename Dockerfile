@@ -37,7 +37,7 @@ RUN install.r -r https://cloud.r-project.org/ \
 # GPG Install
 RUN apt-get -yq --no-install-recommends install \
       gpg \
-      dirmngr
+      dirmngr \
   && apt-get clean \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
   && rm -rf /var/lib/apt/lists/*
