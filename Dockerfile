@@ -3,9 +3,10 @@ FROM r-base:latest
 RUN apt-get update \
   && apt-get -yq --no-install-recommends install \
     jq \
-    curl \
-    littler \
-    r-cran-littler \
+    curl
+
+RUN apt-get update \
+  && apt-get -t unstable -yq install \
     libatlas3-base \
     libopenblas-base \
     libcurl4-openssl-dev \
@@ -13,7 +14,7 @@ RUN apt-get update \
     libmariadb2 \
     libmariadb-dev \
     libnlopt-dev
-    
+
 # Install R packages
 RUN install.r -r https://cloud.r-project.org/ \
       RMySQL \
@@ -36,7 +37,7 @@ RUN install.r -r https://cloud.r-project.org/ \
   && apt-get clean \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
   && rm -rf /var/lib/apt/lists/*
-  
+
 # START Install node 8
 # https://github.com/nodejs/docker-node/blob/master/8/stretch/Dockerfile
 RUN groupadd --gid 1000 node \
