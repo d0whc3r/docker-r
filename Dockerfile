@@ -5,15 +5,14 @@ RUN apt-get update \
     jq \
     curl
 
-RUN apt-get update \
-  && apt-get -t unstable -yq install \
-    libatlas3-base \
-    libopenblas-base \
-    libcurl4-openssl-dev \
-    libcairo2-dev \
-    libmariadb2 \
-    libmariadb-dev \
-    libnlopt-dev
+RUN apt-get -t unstable -yq --no-install-recommends install \
+      libatlas3-base \
+      libopenblas-base \
+      libcurl4-openssl-dev \
+      libcairo2-dev \
+      libmariadb2 \
+      libmariadb-dev \
+      libnlopt-dev
 
 # Install R packages
 RUN install.r -r https://cloud.r-project.org/ \
@@ -33,7 +32,12 @@ RUN install.r -r https://cloud.r-project.org/ \
       ca \
       class \
       cluster \
-      GPArotation \
+      GPArotation
+
+# GPG Install
+RUN apt-get -yq --no-install-recommends install \
+      gpg \
+      dirmngr
   && apt-get clean \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
   && rm -rf /var/lib/apt/lists/*
@@ -60,7 +64,7 @@ RUN set -ex \
     gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 8.10.0
+ENV NODE_VERSION 8.11.1
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
