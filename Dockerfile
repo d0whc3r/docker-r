@@ -40,8 +40,8 @@ RUN install.r -r https://cloud.r-project.org/ \
 
 # START Install node 8
 # https://github.com/nodejs/docker-node/blob/master/8/stretch/Dockerfile
-RUN groupadd --gid 1000 node \
-  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+#RUN groupadd --gid 1000 node \
+#  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 # gpg keys listed at https://github.com/nodejs/node#release-team
 RUN set -ex \
